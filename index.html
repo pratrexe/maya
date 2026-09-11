@@ -3,38 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#111114">
+  <meta name="theme-color" content="#141416">
 
-  <title>MAYA</title>
+  <title>MAYA — Your own little world</title>
 
-  <!-- Script font for the signature; falls back if unavailable. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Great+Vibes&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Manrope:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
 
   <link rel="stylesheet" href="./styles.css">
-  <script src="./app.js" defer></script>
+
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
+  ></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"
+  ></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"
+  ></script>
+
+  <script defer src="./app.js"></script>
 </head>
 
 <body>
   <!-- STARTUP -->
-  <section id="startup" class="startup" aria-label="MAYA startup">
-    <header class="startup-top">
-      <span>MAYA / PERSONAL WEB DESKTOP</span>
-      <span>VOL. 001</span>
+  <section id="boot" class="boot" aria-label="MAYA startup">
+    <header class="boot-header">
+      <span class="wordmark">maya<span>✳</span></span>
+      <span class="label">PERSONAL WEB DESKTOP</span>
     </header>
 
     <div class="boot-center">
-      <span class="handwritten boot-annotation">
-        a little world of your own ↘
-      </span>
+      <div class="boot-symbol" aria-hidden="true">✳</div>
 
       <h1 class="sr-only">MAYA</h1>
 
-      <pre class="ascii-logo" aria-hidden="true">
+      <pre class="ascii" aria-hidden="true">
 ███╗   ███╗ █████╗ ██╗   ██╗ █████╗
 ████╗ ████║██╔══██╗╚██╗ ██╔╝██╔══██╗
 ██╔████╔██║███████║ ╚████╔╝ ███████║
@@ -42,117 +53,270 @@
 ██║ ╚═╝ ██║██║  ██║   ██║   ██║  ██║
 ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝</pre>
 
-      <div class="signature-block">
-        <span class="small-label">IMAGINED BY</span>
+      <div class="signature-wrap">
+        <span class="label">IMAGINED BY</span>
         <p class="signature">Pratyush Rai</p>
-        <svg class="signature-line" viewBox="0 0 280 24" aria-hidden="true">
-          <path d="M8 16 Q98 2 264 10 M64 21 Q161 11 239 16"/>
-        </svg>
       </div>
 
       <div class="boot-loader">
-        <div class="boot-label">
-          <span role="status">starting up<span class="dots" aria-hidden="true">...</span></span>
+        <div class="boot-copy">
+          <span role="status">starting up…</span>
           <span id="boot-percent" aria-hidden="true">0%</span>
         </div>
 
-        <div
+        <progress
           id="boot-progress"
-          class="progress-track"
-          role="progressbar"
+          max="100"
+          value="0"
           aria-label="Startup animation"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="0"
-        >
-          <div id="boot-fill" class="progress-fill"></div>
-        </div>
-
-        <p id="boot-detail" class="boot-detail" aria-hidden="true">
-          unfolding your workspace
-        </p>
+        ></progress>
       </div>
+
+      <noscript>
+        Please enable JavaScript to open MAYA.
+      </noscript>
     </div>
 
-    <footer class="startup-bottom">
-      <span>NOT EVERYTHING NEEDS TO LOOK THE SAME.</span>
-      <span id="ascii-spinner" aria-hidden="true">[ / ]</span>
+    <footer class="boot-footer label">
+      <span>A LITTLE LESS ORDINARY.</span>
+      <span>WEB EDITION / 0.3</span>
     </footer>
   </section>
 
   <!-- DESKTOP -->
-  <main id="desktop" class="desktop" aria-label="MAYA desktop" hidden>
-    <header class="desktop-header">
-      <div>
-        <span class="small-label">A LITTLE WORLD OF YOUR OWN</span>
-        <h1 id="desktop-title" tabindex="-1">maya<span>✳</span></h1>
-      </div>
+  <main id="desktop" hidden>
+    <header class="topbar">
+      <a class="wordmark" href="#home" aria-label="MAYA home">
+        maya<span aria-hidden="true">✳</span>
+      </a>
 
-      <div class="date-block">
-        <time id="clock"></time>
-        <span id="date"></span>
-      </div>
+      <span class="topbar-center">Your space. Your pace.</span>
+
+      <button
+        class="avatar"
+        type="button"
+        data-open="appearance-dialog"
+        aria-label="Customize MAYA"
+      >PR</button>
     </header>
 
-    <div class="workspace">
-      <button
-        id="notes-shortcut"
-        class="shortcut"
-        type="button"
-        aria-controls="notes-window"
-        aria-expanded="false"
-      >
-        <span class="sketch-note" aria-hidden="true">≋</span>
-        <span>my notes</span>
-      </button>
+    <div id="home" class="desktop-content">
+      <section class="hero" aria-labelledby="greeting">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="status-dot" aria-hidden="true"></span>
+            MAKE YOURSELF AT HOME
+          </div>
 
-      <div class="desktop-doodle" aria-hidden="true">
-        <pre>   .       *
-      \ | /
-    -- ✳ --
-      / | \
-  *       .</pre>
-        <span class="handwritten">leave a little room<br>for the unexpected.</span>
-      </div>
+          <h1 id="greeting" tabindex="-1">
+            A little space.<br>
+            <span>A lot of possibility.</span>
+          </h1>
 
-      <section
-        id="notes-window"
-        class="window"
-        aria-labelledby="notes-title"
-        hidden
-      >
-        <header class="window-header">
-          <h2 id="notes-title">a thought or two</h2>
-          <button
-            id="close-notes"
-            class="close-button"
-            type="button"
-            aria-label="Close notes"
-          >×</button>
-        </header>
+          <p>
+            Your thoughts, your time, your own little world.
+            Welcome to MAYA.
+          </p>
 
-        <label for="notes-input" class="sr-only">Your notes</label>
-        <textarea
-          id="notes-input"
-          placeholder="A blank page. No pressure."
-          spellcheck="true"
-        ></textarea>
+          <button class="button primary" type="button" data-open="notes-dialog">
+            Make a little note
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
 
-        <footer id="save-status" class="save-status" role="status">
-          Saved in this browser.
-        </footer>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="flower">✳</div>
+          <span class="art-caption">beautifully yours.</span>
+          <span class="art-spark">+</span>
+        </div>
       </section>
+
+      <section class="workspace" aria-labelledby="workspace-title">
+        <div class="section-heading">
+          <h2 id="workspace-title">On your desk</h2>
+          <span class="label">SMALL THINGS, GOOD ENERGY</span>
+        </div>
+
+        <div class="card-grid">
+          <article class="card clock-card">
+            <div class="card-top">
+              <span class="label">RIGHT HERE, RIGHT NOW</span>
+              <span aria-hidden="true">◷</span>
+            </div>
+
+            <time id="clock" class="clock"></time>
+
+            <div class="clock-bottom">
+              <span id="date"></span>
+              <span class="clock-flower" aria-hidden="true">✳</span>
+            </div>
+          </article>
+
+          <article class="card notes-card">
+            <div class="card-top">
+              <span class="label">A PLACE FOR YOUR THOUGHTS</span>
+              <span aria-hidden="true">↗</span>
+            </div>
+
+            <h3>Small notes.<br>Big beginnings.</h3>
+
+            <p id="note-preview" class="note-preview">
+              That idea you don’t want to forget? Put it here.
+            </p>
+
+            <button class="button dark-button" type="button" data-open="notes-dialog">
+              Open notebook <span aria-hidden="true">＋</span>
+            </button>
+          </article>
+
+          <article class="card appearance-card">
+            <div class="card-top">
+              <span class="label">A DIFFERENT KIND OF DESKTOP</span>
+              <span aria-hidden="true">◐</span>
+            </div>
+
+            <div class="color-art" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+
+            <div class="appearance-bottom">
+              <div>
+                <h3>Make it yours.</h3>
+                <p>A color for your current mood.</p>
+              </div>
+
+              <button
+                class="round-button"
+                type="button"
+                data-open="appearance-dialog"
+                aria-label="Choose an accent color"
+              >↗</button>
+            </div>
+          </article>
+
+          <article class="card pause-card">
+            <span class="label">A FRIENDLY REMINDER</span>
+            <p>You don’t have to<br>fill every moment.</p>
+            <span class="pause-doodle" aria-hidden="true">☁</span>
+            <span class="pause-caption">Room to breathe is a feature.</span>
+          </article>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <span>Designed to feel a little more human.</span>
+        <span class="footer-signature">Pratyush Rai</span>
+      </footer>
     </div>
 
-    <footer class="taskbar">
-      <button id="restart-button" type="button" aria-label="Replay MAYA startup">
-        <span class="taskbar-star" aria-hidden="true">✳</span>
-        maya
+    <nav class="dock" aria-label="Desktop apps">
+      <a class="dock-item dock-home" href="#home" aria-label="Home">
+        <span aria-hidden="true">✳</span>
+      </a>
+
+      <span class="dock-divider" aria-hidden="true"></span>
+
+      <button class="dock-item" type="button" data-open="notes-dialog">
+        <span aria-hidden="true">▤</span>
+        <span class="dock-label">Notes</span>
       </button>
 
-      <span class="taskbar-signature">Pratyush Rai</span>
-      <span class="small-label">WEB / 0.2</span>
-    </footer>
+      <button class="dock-item" type="button" data-open="appearance-dialog">
+        <span aria-hidden="true">◐</span>
+        <span class="dock-label">Style</span>
+      </button>
+
+      <button id="fullscreen-button" class="dock-item" type="button">
+        <span aria-hidden="true">⛶</span>
+        <span id="fullscreen-label" class="dock-label">Expand</span>
+      </button>
+    </nav>
+
+    <p id="toast" class="toast" role="status"></p>
   </main>
+
+  <!-- NOTES APP -->
+  <dialog id="notes-dialog" class="app-dialog" data-lenis-prevent>
+    <div class="dialog-header">
+      <div>
+        <span class="label">MAYA NOTEBOOK</span>
+        <h2>A thought or two.</h2>
+      </div>
+
+      <button
+        class="close-button"
+        type="button"
+        data-close
+        aria-label="Close notebook"
+      >×</button>
+    </div>
+
+    <label for="notes-input" class="sr-only">Your notes</label>
+    <textarea
+      id="notes-input"
+      placeholder="Start anywhere. This space is yours."
+      spellcheck="true"
+    ></textarea>
+
+    <p id="save-status" class="dialog-footer" role="status">
+      Saved only in this browser.
+    </p>
+  </dialog>
+
+  <!-- APPEARANCE APP -->
+  <dialog id="appearance-dialog" class="app-dialog appearance-dialog" data-lenis-prevent>
+    <div class="dialog-header">
+      <div>
+        <span class="label">PERSONALIZE YOUR SPACE</span>
+        <h2>Find your color.</h2>
+      </div>
+
+      <button
+        class="close-button"
+        type="button"
+        data-close
+        aria-label="Close appearance"
+      >×</button>
+    </div>
+
+    <p class="appearance-description">
+      Dark by default. A little personality on top.
+    </p>
+
+    <div class="swatches" role="group" aria-label="Accent color">
+      <button
+        class="swatch lavender"
+        type="button"
+        data-theme="lavender"
+        aria-label="Lavender"
+        aria-pressed="true"
+      ></button>
+      <button
+        class="swatch mint"
+        type="button"
+        data-theme="mint"
+        aria-label="Mint"
+        aria-pressed="false"
+      ></button>
+      <button
+        class="swatch peach"
+        type="button"
+        data-theme="peach"
+        aria-label="Peach"
+        aria-pressed="false"
+      ></button>
+      <button
+        class="swatch blue"
+        type="button"
+        data-theme="blue"
+        aria-label="Blue"
+        aria-pressed="false"
+      ></button>
+    </div>
+
+    <p class="dialog-footer">Inspired by Material. Made for MAYA.</p>
+  </dialog>
 </body>
 </html>

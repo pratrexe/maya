@@ -1,152 +1,337 @@
-const startup = document.querySelector("#startup");
-const desktop = document.querySelector("#desktop");
-
-const bootProgress = document.querySelector("#boot-progress");
-const bootFill = document.querySelector("#boot-fill");
-const bootPercent = document.querySelector("#boot-percent");
-const bootDetail = document.querySelector("#boot-detail");
-const asciiSpinner = document.querySelector("#ascii-spinner");
-
-const notesShortcut = document.querySelector("#notes-shortcut");
-const notesWindow = document.querySelector("#notes-window");
-const notesInput = document.querySelector("#notes-input");
-const saveStatus = document.querySelector("#save-status");
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
 
 const reducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
-);
+).matches;
 
-// Keep the old key so existing Margin OS notes remain available.
-const NOTES_KEY = "margin-os-notes";
+const gsap = window.gsap;
+const ScrollTrigger = window.ScrollTrigger;
 
-let bootTimer;
-let finishTimer;
+let lenis;
+let toastTimer;
 
-function startMaya() {
-  clearInterval(bootTimer);
-  clearTimeout(finishTimer);
+// ---------- SAVED APPEARANCE ----------
 
-  startup.hidden = false;
-  desktop.hidden = true;
+const themes = ["lavender", "mint", "peach", "blue"];
 
-  let progress = 0;
-  let frame = 0;
+function applyTheme(theme) {
+  if (!themes.includes(theme)) return;
 
-  const frames = ["[ / ]", "[ — ]", "[ \\ ]", "[ | ]"];
-  const duration = reducedMotion.matches ? 400 : 3200;
-  const startedAt = performance.now();
+  document.documentElement.dataset.theme = theme;
 
-  setProgress(0);
-  bootDetail.textContent = "unfolding your workspace";
-  asciiSpinner.textContent = frames[0];
+  $$("[data-theme]").forEach((button) => {
+    if (button.tagName !== "BUTTON") return;
 
-  // A timed visual introduction, not actual OS boot progress.
-  bootTimer = setInterval(() => {
-    const elapsed = performance.now() - startedAt;
-    progress = Math.min(100, Math.floor((elapsed / duration) * 100));
+    button.setAttribute(
+      "aria-pressed",
+      String(button.dataset.theme === theme)
+    );
+  });
+}
 
-    setProgress(progress);
+try {
+  applyTheme(localStorage.getItem("maya-theme") || "lavender");
+} catch {
+  applyTheme("lavender");
+}
 
-    if (!reducedMotion.matches) {
-      asciiSpinner.textContent = frames[frame++ % frames.length];
+$$("button[data-theme]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const theme = button.dataset.theme;
+    applyTheme(theme);
+
+    try {
+      localStorage.setItem("maya-theme", theme);
+    } catch {
+      showToast("Color applied. This browser could not save it.");
     }
+  });
+});
 
-    if (progress < 35) {
-      bootDetail.textContent = "unfolding your workspace";
-    } else if (progress < 75) {
-      bootDetail.textContent = "putting thoughts in place";
+// ---------- STARTUP ----------
+
+// This progress represents a short visual introduction,
+// not downloads, hardware initialization, or real OS loading.
+const bootState = { progress: 0 };
+
+function updateBoot() {
+  const value = Math.round(bootState.progress);
+  $("#boot-progress").value = value;
+  $("#boot-percent").textContent = `${value}%`;
+}
+
+function revealDesktop() {
+  $("#boot").hidden = true;
+  $("#desktop").hidden = false;
+
+  updateClock();
+  $("#greeting").focus({ preventScroll: true });
+
+  if (!gsap || reducedMotion) return;
+
+  gsap.from(".topbar", {
+    opacity: 0,
+    y: -14,
+    duration: 0.65,
+    ease: "power3.out"
+  });
+
+  gsap.from(".hero-copy > *", {
+    opacity: 0,
+    y: 26,
+    duration: 0.85,
+    stagger: 0.1,
+    ease: "power3.out"
+  });
+
+  gsap.from(".hero-art", {
+    opacity: 0,
+    scale: 0.85,
+    rotation: -12,
+    duration: 1.2,
+    ease: "power3.out"
+  });
+
+  gsap.from(".dock", {
+    opacity: 0,
+    y: 24,
+    duration: 0.8,
+    delay: 0.35,
+    ease: "power3.out"
+  });
+
+  initializeScrolling();
+}
+
+function startBoot() {
+  if (reducedMotion) {
+    bootState.progress = 100;
+    updateBoot();
+    revealDesktop();
+    return;
+  }
+
+  if (gsap) {
+    gsap.from(".boot-center", {
+      opacity: 0,
+      y: 18,
+      duration: 0.65,
+      ease: "power2.out"
+    });
+
+    gsap.to(".boot-symbol", {
+      rotation: 180,
+      duration: 2.8,
+      ease: "power2.inOut"
+    });
+
+    gsap.to(bootState, {
+      progress: 100,
+      duration: 2.6,
+      ease: "power1.inOut",
+      onUpdate: updateBoot,
+      onComplete: () => {
+        gsap.to("#boot", {
+          opacity: 0,
+          duration: 0.35,
+          delay: 0.15,
+          onComplete: revealDesktop
+        });
+      }
+    });
+
+    return;
+  }
+
+  // Keep MAYA usable if the animation CDN is unavailable.
+  const started = performance.now();
+
+  function fallbackBoot(now) {
+    bootState.progress = Math.min(100, ((now - started) / 1200) * 100);
+    updateBoot();
+
+    if (bootState.progress < 100) {
+      requestAnimationFrame(fallbackBoot);
     } else {
-      bootDetail.textContent = "a fresh start awaits";
+      revealDesktop();
     }
+  }
 
-    if (progress >= 100) {
-      clearInterval(bootTimer);
-
-      asciiSpinner.textContent = "[ ✳ ]";
-      bootDetail.textContent = "welcome to maya";
-
-      finishTimer = setTimeout(() => {
-        startup.hidden = true;
-        desktop.hidden = false;
-
-        updateClock();
-        document.querySelector("#desktop-title").focus();
-      }, reducedMotion.matches ? 0 : 350);
-    }
-  }, 80);
+  requestAnimationFrame(fallbackBoot);
 }
 
-function setProgress(value) {
-  bootFill.style.width = `${value}%`;
-  bootPercent.textContent = `${value}%`;
-  bootProgress.setAttribute("aria-valuenow", String(value));
+// ---------- SCROLL / GSAP SYNC ----------
+
+function initializeScrolling() {
+  if (ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  if (window.Lenis) {
+    lenis = new window.Lenis({
+      duration: 1.05,
+      smoothWheel: true,
+      anchors: true
+    });
+
+    if (ScrollTrigger) {
+      lenis.on("scroll", ScrollTrigger.update);
+    }
+
+    // Lenis expects milliseconds; GSAP's ticker supplies seconds.
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+  }
+
+  if (!ScrollTrigger) return;
+
+  gsap.utils.toArray(".card").forEach((card) => {
+    gsap.from(card, {
+      opacity: 0,
+      y: 32,
+      duration: 0.75,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 94%",
+        once: true
+      }
+    });
+  });
+
+  ScrollTrigger.refresh();
+
+  if (document.fonts) {
+    document.fonts.ready.then(() => ScrollTrigger.refresh());
+  }
 }
 
-document
-  .querySelector("#restart-button")
-  .addEventListener("click", startMaya);
-
-// CLOCK
+// ---------- CLOCK ----------
 
 function updateClock() {
   const now = new Date();
-  const clock = document.querySelector("#clock");
 
-  clock.dateTime = now.toISOString();
-  clock.textContent = now.toLocaleTimeString([], {
+  $("#clock").dateTime = now.toISOString();
+  $("#clock").textContent = now.toLocaleTimeString([], {
     hour: "2-digit",
-    minute: "2-digit"
+    minute: "2-digit",
+    hour12: false
   });
 
-  document.querySelector("#date").textContent =
-    now.toLocaleDateString([], {
-      weekday: "short",
-      month: "short",
-      day: "numeric"
-    });
+  $("#date").textContent = now.toLocaleDateString([], {
+    weekday: "long",
+    month: "long",
+    day: "numeric"
+  });
 }
 
 updateClock();
 setInterval(updateClock, 1000);
 
-// NOTES
+// ---------- APP WINDOWS ----------
 
-notesShortcut.addEventListener("click", () => {
-  notesWindow.hidden = false;
-  notesShortcut.setAttribute("aria-expanded", "true");
-  notesInput.focus();
+// Native dialogs provide focus trapping and Escape-to-close.
+$$("[data-open]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const dialog = document.getElementById(button.dataset.open);
+
+    lenis?.stop();
+    dialog.showModal();
+
+    if (gsap && !reducedMotion) {
+      gsap.fromTo(
+        dialog,
+        { opacity: 0, y: 20, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.3,
+          ease: "power3.out",
+          clearProps: "transform,opacity"
+        }
+      );
+    }
+  });
 });
 
-function closeNotes() {
-  notesWindow.hidden = true;
-  notesShortcut.setAttribute("aria-expanded", "false");
-  notesShortcut.focus();
+$$("[data-close]").forEach((button) => {
+  button.addEventListener("click", () => {
+    button.closest("dialog").close();
+  });
+});
+
+$$("dialog").forEach((dialog) => {
+  dialog.addEventListener("close", () => {
+    lenis?.start();
+  });
+});
+
+// ---------- NOTES ----------
+
+// Retain notes created by your earlier versions.
+const NOTES_KEY = "margin-os-notes";
+
+function updateNotePreview() {
+  const text = $("#notes-input").value.trim();
+
+  $("#note-preview").textContent = text
+    ? text.slice(0, 180)
+    : "That idea you don’t want to forget? Put it here.";
 }
-
-document
-  .querySelector("#close-notes")
-  .addEventListener("click", closeNotes);
-
-notesWindow.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    closeNotes();
-  }
-});
 
 try {
-  notesInput.value = localStorage.getItem(NOTES_KEY) ?? "";
+  $("#notes-input").value = localStorage.getItem(NOTES_KEY) || "";
 } catch {
-  saveStatus.textContent = "Local saving is unavailable.";
+  $("#save-status").textContent = "Local saving is unavailable.";
 }
 
-notesInput.addEventListener("input", () => {
+updateNotePreview();
+
+$("#notes-input").addEventListener("input", () => {
+  updateNotePreview();
+
   try {
-    localStorage.setItem(NOTES_KEY, notesInput.value);
-    saveStatus.textContent = "Saved in this browser.";
+    localStorage.setItem(NOTES_KEY, $("#notes-input").value);
+    $("#save-status").textContent = "Saved only in this browser.";
   } catch {
-    saveStatus.textContent = "Could not save — keep a copy before leaving.";
+    $("#save-status").textContent =
+      "Could not save. Copy your notes before closing this page.";
   }
 });
 
-// Launch automatically.
-startMaya();
+// ---------- FULLSCREEN ----------
+
+$("#fullscreen-button").addEventListener("click", async () => {
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else if (document.documentElement.requestFullscreen) {
+      await document.documentElement.requestFullscreen();
+    } else {
+      showToast("Fullscreen is not available in this browser.");
+    }
+  } catch {
+    showToast("Fullscreen was blocked by this browser.");
+  }
+});
+
+document.addEventListener("fullscreenchange", () => {
+  $("#fullscreen-label").textContent =
+    document.fullscreenElement ? "Shrink" : "Expand";
+});
+
+// ---------- FEEDBACK ----------
+
+function showToast(message) {
+  clearTimeout(toastTimer);
+  $("#toast").textContent = message;
+
+  toastTimer = setTimeout(() => {
+    $("#toast").textContent = "";
+  }, 3500);
+}
+
+startBoot();
