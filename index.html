@@ -2,87 +2,157 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Margin OS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111114">
 
-  <style>
-    :root {
-      --paper: #f4efdf;
-      --ink: #292720;
-      --accent: #345bd8;
-    }
+  <title>MAYA</title>
 
-    * {
-      box-sizing: border-box;
-    }
+  <!-- Script font for the signature; falls back if unavailable. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Great+Vibes&display=swap"
+    rel="stylesheet"
+  >
 
-    body {
-      margin: 0;
-      height: 100vh;
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      color: var(--ink);
-      background: var(--paper);
-      font-family: "Segoe Print", "Bradley Hand", cursive;
-    }
-
-    /* A faint dotted-paper desktop */
-    .desktop {
-      flex: 1;
-      min-height: 0;
-      padding: 32px;
-      background-image: radial-gradient(
-        #29272020 1px,
-        transparent 1px
-      );
-      background-size: 24px 24px;
-    }
-
-    .title {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: -1px;
-    }
-
-    .subtitle {
-      margin-top: 8px;
-      font-size: 14px;
-    }
-
-    /* Slightly uneven edges give it a drawn feel */
-    .taskbar {
-      margin: 0 14px 14px;
-      padding: 12px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 2px solid var(--ink);
-      border-radius: 8px 13px 7px 11px;
-      background: var(--paper);
-      box-shadow: 3px 3px 0 var(--ink);
-    }
-
-    .brand {
-      font-weight: bold;
-      color: var(--accent);
-    }
-
-    .status {
-      font-size: 12px;
-    }
-  </style>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
 </head>
-<body>
-  <main class="desktop">
-    <h1 class="title">Margin OS</h1>
-    <p class="subtitle">a little room for your ideas.</p>
-  </main>
 
-  <footer class="taskbar" aria-label="Desktop status">
-    <span class="brand">margin ✳</span>
-    <span class="status">a blank beginning.</span>
-  </footer>
+<body>
+  <!-- STARTUP -->
+  <section id="startup" class="startup" aria-label="MAYA startup">
+    <header class="startup-top">
+      <span>MAYA / PERSONAL WEB DESKTOP</span>
+      <span>VOL. 001</span>
+    </header>
+
+    <div class="boot-center">
+      <span class="handwritten boot-annotation">
+        a little world of your own ↘
+      </span>
+
+      <h1 class="sr-only">MAYA</h1>
+
+      <pre class="ascii-logo" aria-hidden="true">
+███╗   ███╗ █████╗ ██╗   ██╗ █████╗
+████╗ ████║██╔══██╗╚██╗ ██╔╝██╔══██╗
+██╔████╔██║███████║ ╚████╔╝ ███████║
+██║╚██╔╝██║██╔══██║  ╚██╔╝  ██╔══██║
+██║ ╚═╝ ██║██║  ██║   ██║   ██║  ██║
+╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝</pre>
+
+      <div class="signature-block">
+        <span class="small-label">IMAGINED BY</span>
+        <p class="signature">Pratyush Rai</p>
+        <svg class="signature-line" viewBox="0 0 280 24" aria-hidden="true">
+          <path d="M8 16 Q98 2 264 10 M64 21 Q161 11 239 16"/>
+        </svg>
+      </div>
+
+      <div class="boot-loader">
+        <div class="boot-label">
+          <span role="status">starting up<span class="dots" aria-hidden="true">...</span></span>
+          <span id="boot-percent" aria-hidden="true">0%</span>
+        </div>
+
+        <div
+          id="boot-progress"
+          class="progress-track"
+          role="progressbar"
+          aria-label="Startup animation"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <div id="boot-fill" class="progress-fill"></div>
+        </div>
+
+        <p id="boot-detail" class="boot-detail" aria-hidden="true">
+          unfolding your workspace
+        </p>
+      </div>
+    </div>
+
+    <footer class="startup-bottom">
+      <span>NOT EVERYTHING NEEDS TO LOOK THE SAME.</span>
+      <span id="ascii-spinner" aria-hidden="true">[ / ]</span>
+    </footer>
+  </section>
+
+  <!-- DESKTOP -->
+  <main id="desktop" class="desktop" aria-label="MAYA desktop" hidden>
+    <header class="desktop-header">
+      <div>
+        <span class="small-label">A LITTLE WORLD OF YOUR OWN</span>
+        <h1 id="desktop-title" tabindex="-1">maya<span>✳</span></h1>
+      </div>
+
+      <div class="date-block">
+        <time id="clock"></time>
+        <span id="date"></span>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <button
+        id="notes-shortcut"
+        class="shortcut"
+        type="button"
+        aria-controls="notes-window"
+        aria-expanded="false"
+      >
+        <span class="sketch-note" aria-hidden="true">≋</span>
+        <span>my notes</span>
+      </button>
+
+      <div class="desktop-doodle" aria-hidden="true">
+        <pre>   .       *
+      \ | /
+    -- ✳ --
+      / | \
+  *       .</pre>
+        <span class="handwritten">leave a little room<br>for the unexpected.</span>
+      </div>
+
+      <section
+        id="notes-window"
+        class="window"
+        aria-labelledby="notes-title"
+        hidden
+      >
+        <header class="window-header">
+          <h2 id="notes-title">a thought or two</h2>
+          <button
+            id="close-notes"
+            class="close-button"
+            type="button"
+            aria-label="Close notes"
+          >×</button>
+        </header>
+
+        <label for="notes-input" class="sr-only">Your notes</label>
+        <textarea
+          id="notes-input"
+          placeholder="A blank page. No pressure."
+          spellcheck="true"
+        ></textarea>
+
+        <footer id="save-status" class="save-status" role="status">
+          Saved in this browser.
+        </footer>
+      </section>
+    </div>
+
+    <footer class="taskbar">
+      <button id="restart-button" type="button" aria-label="Replay MAYA startup">
+        <span class="taskbar-star" aria-hidden="true">✳</span>
+        maya
+      </button>
+
+      <span class="taskbar-signature">Pratyush Rai</span>
+      <span class="small-label">WEB / 0.2</span>
+    </footer>
+  </main>
 </body>
 </html>
