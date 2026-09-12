@@ -6,7 +6,6 @@ const reducedMotion = window.matchMedia(
 ).matches;
 
 const gsap = window.gsap;
-const ScrollTrigger = window.ScrollTrigger;
 
 let toastTimer;
 const startTime = Date.now();
@@ -562,6 +561,10 @@ function initAudioContext() {
 
   masterGain = audioCtx.createGain();
   masterGain.gain.setValueAtTime(0.65, audioCtx.currentTime);
+  const ccVol = $("#cc-volume");
+  const appVol = $("#app-volume-slider");
+  if (ccVol) masterGain.gain.setValueAtTime(ccVol.value / 100, audioCtx.currentTime);
+  if (appVol && !ccVol) masterGain.gain.setValueAtTime(appVol.value / 100, audioCtx.currentTime);
 
   analyser = audioCtx.createAnalyser();
   analyser.fftSize = 64;
@@ -673,6 +676,10 @@ function stopCurrentSoundNodes() {
     soundNodes = null;
   }
   isSoundPlaying = false;
+  if (visualizerAnimationId) {
+    cancelAnimationFrame(visualizerAnimationId);
+    visualizerAnimationId = null;
+  }
   updateSoundUI();
 }
 
@@ -854,13 +861,13 @@ function setBreatheCircleScale(scale, duration) {
 
 function updateBreatheTick() {
   const current = breathePhases[breathePhaseIndex];
-  breatheSeconds++;
 
   const timerEl = $("#breathe-timer");
   const phaseEl = $("#breathe-phase");
   const instEl = $("#breathe-instruction");
   const cycleEl = $("#breathe-cycles");
 
+  breatheSeconds++;
   if (timerEl)
     timerEl.textContent = `${breatheSeconds}s / ${current.duration}s`;
   if (phaseEl) phaseEl.textContent = current.name;
@@ -872,6 +879,17 @@ function updateBreatheTick() {
     if (breathePhaseIndex === 0) {
       breatheCyclesCompleted++;
       if (cycleEl) cycleEl.textContent = `Cycle ${breatheCyclesCompleted} of 4`;
+      if (breatheCyclesCompleted >= 4) {
+        clearInterval(breatheTimer);
+        breatheRunning = false;
+        setBreatheCircleScale(1, 1);
+        const btn = $("#breathe-toggle-btn");
+        if (btn) btn.textContent = "Start Session";
+        $("#breathe-phase").textContent = "Complete";
+        $("#breathe-instruction").textContent = "Well done. Four cycles of calm complete.";
+        breatheCyclesCompleted = 0;
+        return;
+      }
     }
     const nextPhase = breathePhases[breathePhaseIndex];
     setBreatheCircleScale(nextPhase.scale, nextPhase.duration);
@@ -1331,6 +1349,7 @@ function initDesktopInteractions() {
     desktop?.classList.toggle("zen-mode");
     const isZen = desktop?.classList.contains("zen-mode");
     btn?.classList.toggle("active", isZen);
+    $(".os-menubar")?.classList.toggle("zen-hidden", isZen);
     showToast(isZen ? "Zen Mode enabled. Room to breathe." : "Zen Mode off.");
   });
 
@@ -1454,7 +1473,7 @@ function initDesktopInteractions() {
 // NOTES AUTO-SAVING & TELEMETRY
 // ========================================================
 
-const NOTES_KEY = "margin-os-notes";
+const NOTES_KEY = "maya-os-notes";
 
 function initNotes() {
   const notesInput = $("#notes-input");

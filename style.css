@@ -12,6 +12,7 @@
   --accent-surface: #302b3b;
 
   --font: "Manrope", sans-serif;
+  --glass-blur: 26px;
 }
 
 :root[data-theme="mint"] {
@@ -46,9 +47,6 @@
   display: none !important;
 }
 
-html {
-  scroll-padding-top: 32px;
-}
 
 body {
   margin: 0;
@@ -56,11 +54,9 @@ body {
   color: var(--text);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-body:has(dialog[open]) {
-  overflow: hidden;
-}
 
 button,
 textarea,
@@ -624,8 +620,8 @@ textarea:focus-visible {
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 18px;
   background: rgba(30, 28, 35, 0.88);
-  backdrop-filter: blur(32px) saturate(180%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  backdrop-filter: blur(var(--glass-blur, 32px)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 32px)) saturate(180%);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05);
   color: var(--text);
   animation: popover-enter 0.18s cubic-bezier(0.16, 1, 0.3, 1);
@@ -759,6 +755,16 @@ textarea:focus-visible {
   appearance: none;
   width: 16px;
   height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.cc-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 0;
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
@@ -975,7 +981,7 @@ textarea:focus-visible {
 .selection-marquee {
   position: absolute;
   border: 1px solid var(--accent);
-  background: rgba(208, 188, 255, 0.15);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
   border-radius: 4px;
   pointer-events: none;
   z-index: 10;
@@ -1016,8 +1022,8 @@ textarea:focus-visible {
 }
 
 .desktop-icon.selected {
-  background: rgba(208, 188, 255, 0.2);
-  border-color: rgba(208, 188, 255, 0.4);
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
 .icon-tile {
@@ -1267,8 +1273,8 @@ textarea:focus-visible {
   min-height: 240px;
   border-radius: 20px;
   background: rgba(30, 28, 36, 0.82);
-  backdrop-filter: blur(36px) saturate(190%);
-  -webkit-backdrop-filter: blur(36px) saturate(190%);
+  backdrop-filter: blur(var(--glass-blur, 36px)) saturate(190%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 36px)) saturate(190%);
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 24px 75px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.04);
   overflow: hidden;
@@ -1387,6 +1393,23 @@ textarea:focus-visible {
   width: 16px;
   height: 16px;
   cursor: nwse-resize;
+}
+
+.window-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.window-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.window-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+.window-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* APP: NOTES */
@@ -1647,6 +1670,27 @@ textarea:focus-visible {
   color: var(--muted);
 }
 
+.button.primary {
+  padding: 10px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.button.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.button.primary:active {
+  transform: translateY(0);
+}
+
 /* APP: TERMINAL */
 .window-terminal {
   background: rgba(16, 17, 20, 0.94);
@@ -1772,9 +1816,9 @@ textarea:focus-visible {
   border-radius: 26px;
   background: rgba(28, 26, 33, 0.72);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(32px) saturate(190%);
-  -webkit-backdrop-filter: blur(32px) saturate(190%);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(var(--glass-blur, 32px)) saturate(190%);
+  -webkit-backdrop-filter: blur(var(--glass-blur, 32px)) saturate(190%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, border-color 0.3s ease;
 }
 
 .dock-item {
@@ -1892,20 +1936,6 @@ textarea:focus-visible {
   transform: translateX(-50%) translateY(-6px);
 }
 
-/* LENIS */
-
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
 
 /* ACCESSIBILITY / RESPONSIVE */
 

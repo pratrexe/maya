@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#141416">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✳</text></svg>">
 
   <title>MAYA — Your own little world</title>
+  <meta name="description" content="MAYA — A personal web operating system. Your own little world, designed to feel a little more human.">
+  <meta property="og:title" content="MAYA — Your own little world">
+  <meta property="og:description" content="A personal web operating system designed to feel a little more human.">
+  <meta property="og:type" content="website">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,19 +18,11 @@
     href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Manrope:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   >
-
+  <link rel="stylesheet" href="style.css">
 
   <script
     defer
     src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
-  ></script>
-  <script
-    defer
-    src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"
-  ></script>
-  <script
-    defer
-    src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"
   ></script>
 
   <script defer src="./app.js"></script>
@@ -326,7 +322,7 @@
             <span class="sound-status-dot active" id="widget-sound-indicator" aria-hidden="true"></span>
           </div>
           <div class="widget-sound-center">
-            <canvas id="widget-visualizer" class="widget-visualizer" width="160" height="40"></canvas>
+            <canvas id="widget-visualizer" class="widget-visualizer" width="280" height="48"></canvas>
             <div class="widget-track-info">
               <span class="widget-track-title" id="widget-track-name">Gentle Rain</span>
               <span class="widget-track-mode">Web Audio Synthesizer</span>
@@ -524,7 +520,7 @@
                 <div class="breathe-circle-inner" id="breathe-circle"></div>
                 <div class="breathe-center-text">
                   <span class="breathe-phase" id="breathe-phase">Ready</span>
-                  <span class="breathe-timer" id="breathe-timer">0s</span>
+                  <span class="breathe-timer" id="breathe-timer" role="status" aria-live="polite">0s</span>
                 </div>
               </div>
             </div>
@@ -555,7 +551,7 @@
             <div class="window-actions"></div>
           </header>
           <div class="window-body terminal-body" id="terminal-body">
-            <div class="terminal-output" id="terminal-output">
+            <div class="terminal-output" id="terminal-output" role="log" aria-live="polite">
               <div class="terminal-line banner">
                 <span>MayaOS Web Edition v0.4 (Awwwards Release)</span>
                 <span>Type <strong class="term-hl">help</strong> to view available commands.</span>
