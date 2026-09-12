@@ -15,7 +15,6 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="./styles.css">
 
   <script
     defer
@@ -36,41 +35,49 @@
 <body>
   <!-- STARTUP -->
   <section id="boot" class="boot" aria-label="MAYA startup">
+    <div class="boot-ambient" aria-hidden="true"></div>
+
     <header class="boot-header">
-      <span class="wordmark">maya<span>✳</span></span>
-      <span class="label">PERSONAL WEB DESKTOP</span>
+      <span class="wordmark">maya<span aria-hidden="true">✳</span></span>
+      <span class="boot-sub">Your space. Your pace.</span>
+      <span class="boot-tag label">WEB EDITION / 0.3</span>
     </header>
 
     <div class="boot-center">
-      <div class="boot-symbol" aria-hidden="true">✳</div>
-
-      <h1 class="sr-only">MAYA</h1>
-
-      <pre class="ascii" aria-hidden="true">
-███╗   ███╗ █████╗ ██╗   ██╗ █████╗
-████╗ ████║██╔══██╗╚██╗ ██╔╝██╔══██╗
-██╔████╔██║███████║ ╚████╔╝ ███████║
-██║╚██╔╝██║██╔══██║  ╚██╔╝  ██╔══██║
-██║ ╚═╝ ██║██║  ██║   ██║   ██║  ██║
-╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝</pre>
-
-      <div class="signature-wrap">
-        <span class="label">IMAGINED BY</span>
-        <p class="signature">Pratyush Rai</p>
+      <div class="boot-stage" aria-hidden="true">
+        <div class="orbit boot-orbit-one"></div>
+        <div class="orbit boot-orbit-two"></div>
+        <div class="boot-flower">✳</div>
+        <span class="boot-caption art-caption">room to breathe.</span>
+        <span class="art-spark boot-spark">+</span>
       </div>
 
-      <div class="boot-loader">
+      <div class="boot-info">
+        <div class="eyebrow boot-eyebrow">
+          <span class="status-dot boot-pulse-dot" aria-hidden="true"></span>
+          INITIALIZING YOUR SPACE
+        </div>
+
+        <h1 class="boot-title">
+          A little space.<br>
+          <span>Starting up.</span>
+        </h1>
+
+        <div class="signature-wrap boot-signature-wrap">
+          <span class="label">IMAGINED BY</span>
+          <p class="signature">Pratyush Rai</p>
+        </div>
+      </div>
+
+      <div class="boot-loader-card">
         <div class="boot-copy">
-          <span role="status">starting up…</span>
+          <span id="boot-status" role="status">Waking up your space…</span>
           <span id="boot-percent" aria-hidden="true">0%</span>
         </div>
 
-        <progress
-          id="boot-progress"
-          max="100"
-          value="0"
-          aria-label="Startup animation"
-        ></progress>
+        <div class="boot-progress-track" role="progressbar" aria-label="Startup animation" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+          <div id="boot-progress-bar" class="boot-progress-bar"></div>
+        </div>
       </div>
 
       <noscript>
@@ -80,244 +87,651 @@
 
     <footer class="boot-footer label">
       <span>A LITTLE LESS ORDINARY.</span>
-      <span>WEB EDITION / 0.3</span>
+      <span>DESIGNED TO FEEL A LITTLE MORE HUMAN.</span>
     </footer>
   </section>
 
-  <!-- DESKTOP -->
-  <main id="desktop" hidden>
-    <header class="topbar">
-      <a class="wordmark" href="#home" aria-label="MAYA home">
-        maya<span aria-hidden="true">✳</span>
-      </a>
-
-      <span class="topbar-center">Your space. Your pace.</span>
-
-      <button
-        class="avatar"
-        type="button"
-        data-open="appearance-dialog"
-        aria-label="Customize MAYA"
-      >PR</button>
-    </header>
-
-    <div id="home" class="desktop-content">
-      <section class="hero" aria-labelledby="greeting">
-        <div class="hero-copy">
-          <div class="eyebrow">
-            <span class="status-dot" aria-hidden="true"></span>
-            MAKE YOURSELF AT HOME
-          </div>
-
-          <h1 id="greeting" tabindex="-1">
-            A little space.<br>
-            <span>A lot of possibility.</span>
-          </h1>
-
-          <p>
-            Your thoughts, your time, your own little world.
-            Welcome to MAYA.
-          </p>
-
-          <button class="button primary" type="button" data-open="notes-dialog">
-            Make a little note
-            <span aria-hidden="true">↗</span>
-          </button>
-        </div>
-
-        <div class="hero-art" aria-hidden="true">
-          <div class="orbit orbit-one"></div>
-          <div class="orbit orbit-two"></div>
-          <div class="flower">✳</div>
-          <span class="art-caption">beautifully yours.</span>
-          <span class="art-spark">+</span>
-        </div>
-      </section>
-
-      <section class="workspace" aria-labelledby="workspace-title">
-        <div class="section-heading">
-          <h2 id="workspace-title">On your desk</h2>
-          <span class="label">SMALL THINGS, GOOD ENERGY</span>
-        </div>
-
-        <div class="card-grid">
-          <article class="card clock-card">
-            <div class="card-top">
-              <span class="label">RIGHT HERE, RIGHT NOW</span>
-              <span aria-hidden="true">◷</span>
-            </div>
-
-            <time id="clock" class="clock"></time>
-
-            <div class="clock-bottom">
-              <span id="date"></span>
-              <span class="clock-flower" aria-hidden="true">✳</span>
-            </div>
-          </article>
-
-          <article class="card notes-card">
-            <div class="card-top">
-              <span class="label">A PLACE FOR YOUR THOUGHTS</span>
-              <span aria-hidden="true">↗</span>
-            </div>
-
-            <h3>Small notes.<br>Big beginnings.</h3>
-
-            <p id="note-preview" class="note-preview">
-              That idea you don’t want to forget? Put it here.
-            </p>
-
-            <button class="button dark-button" type="button" data-open="notes-dialog">
-              Open notebook <span aria-hidden="true">＋</span>
-            </button>
-          </article>
-
-          <article class="card appearance-card">
-            <div class="card-top">
-              <span class="label">A DIFFERENT KIND OF DESKTOP</span>
-              <span aria-hidden="true">◐</span>
-            </div>
-
-            <div class="color-art" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>
-
-            <div class="appearance-bottom">
-              <div>
-                <h3>Make it yours.</h3>
-                <p>A color for your current mood.</p>
-              </div>
-
-              <button
-                class="round-button"
-                type="button"
-                data-open="appearance-dialog"
-                aria-label="Choose an accent color"
-              >↗</button>
-            </div>
-          </article>
-
-          <article class="card pause-card">
-            <span class="label">A FRIENDLY REMINDER</span>
-            <p>You don’t have to<br>fill every moment.</p>
-            <span class="pause-doodle" aria-hidden="true">☁</span>
-            <span class="pause-caption">Room to breathe is a feature.</span>
-          </article>
-        </div>
-      </section>
-
-      <footer class="page-footer">
-        <span>Designed to feel a little more human.</span>
-        <span class="footer-signature">Pratyush Rai</span>
-      </footer>
+  <!-- DESKTOP OS ENVIRONMENT -->
+  <main id="desktop" class="os-root" hidden>
+    <!-- WALLPAPER & AMBIENT AURA -->
+    <div class="os-wallpaper" id="os-wallpaper">
+      <div class="ambient-orb ambient-orb-1" aria-hidden="true"></div>
+      <div class="ambient-orb ambient-orb-2" aria-hidden="true"></div>
+      <div class="ambient-mesh" aria-hidden="true"></div>
     </div>
 
-    <nav class="dock" aria-label="Desktop apps">
-      <a class="dock-item dock-home" href="#home" aria-label="Home">
-        <span aria-hidden="true">✳</span>
-      </a>
+    <!-- TOP MENU BAR -->
+    <header class="os-menubar" role="banner" aria-label="Menu bar">
+      <div class="menubar-left">
+        <button class="menubar-btn os-logo-btn" id="btn-apple-menu" aria-label="MAYA system menu" aria-expanded="false" aria-haspopup="true">
+          maya<span class="asterisk" aria-hidden="true">✳</span>
+        </button>
+
+        <span class="menubar-active-app" id="active-app-title">MayaOS</span>
+
+        <nav class="menubar-nav" aria-label="Application menu">
+          <button class="menubar-item" data-menu="file" type="button">File</button>
+          <button class="menubar-item" data-menu="edit" type="button">Edit</button>
+          <button class="menubar-item" data-menu="view" type="button">View</button>
+          <button class="menubar-item" data-menu="window" type="button">Window</button>
+          <button class="menubar-item" data-menu="help" type="button">Help</button>
+        </nav>
+      </div>
+
+      <div class="menubar-center">
+        <button class="menubar-pill" id="btn-menubar-sound" type="button" aria-label="Toggle Soundscape">
+          <span class="sound-wave-icon" id="menubar-sound-wave" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+          <span id="menubar-sound-text">Soundscape: Calm</span>
+        </button>
+      </div>
+
+      <div class="menubar-right">
+        <button class="menubar-tray-btn spotlight-trigger" id="btn-spotlight" type="button" title="Spotlight Search (Ctrl+K or Cmd+K)">
+          <span class="tray-icon" aria-hidden="true">⌕</span>
+          <kbd class="kbd-shortcut">⌘K</kbd>
+        </button>
+
+        <button class="menubar-tray-btn" id="btn-audio-toggle" type="button" title="Ambient Sound Toggle" aria-pressed="false">
+          <span id="tray-sound-icon" aria-hidden="true">♪</span>
+        </button>
+
+        <span class="menubar-tray-item" id="tray-battery" title="Battery Status">
+          <span class="battery-level">100%</span> ⚡
+        </span>
+
+        <span class="menubar-tray-item online-badge" title="System Connected">
+          <span class="status-dot-sm" aria-hidden="true"></span> Online
+        </span>
+
+        <time class="menubar-tray-item menubar-clock" id="tray-clock"></time>
+
+        <button class="menubar-tray-btn" id="btn-control-center" type="button" title="Control Center" aria-expanded="false" aria-haspopup="true">
+          <span class="control-center-icon" aria-hidden="true">⚲</span>
+        </button>
+
+        <button class="menubar-avatar" id="btn-user-avatar" type="button" title="Pratyush Rai — Customizer">
+          PR
+        </button>
+      </div>
+    </header>
+
+    <!-- SYSTEM DROPDOWN MENU -->
+    <div class="os-popover system-menu" id="system-menu" hidden role="menu" aria-label="System Menu">
+      <div class="popover-section">
+        <button class="menu-action" data-action="about" role="menuitem">About MayaOS 0.4</button>
+        <button class="menu-action" data-action="settings" role="menuitem">System Preferences…</button>
+      </div>
+      <div class="popover-divider"></div>
+      <div class="popover-section">
+        <button class="menu-action" data-action="new-note" role="menuitem">New Note <kbd>⌘N</kbd></button>
+        <button class="menu-action" data-action="open-terminal" role="menuitem">Open Terminal <kbd>⌘T</kbd></button>
+      </div>
+      <div class="popover-divider"></div>
+      <div class="popover-section">
+        <button class="menu-action" data-action="lock" role="menuitem">Lock Desktop <kbd>⌘L</kbd></button>
+        <button class="menu-action" data-action="reboot" role="menuitem">Restart MayaOS…</button>
+      </div>
+    </div>
+
+    <!-- CONTROL CENTER -->
+    <div class="os-popover control-center" id="control-center" hidden role="region" aria-label="Control Center">
+      <div class="cc-header">
+        <h3>Control Center</h3>
+        <span class="label">PERSONAL SPACE</span>
+      </div>
+
+      <div class="cc-grid">
+        <!-- AMBIENT AUDIO CARD -->
+        <div class="cc-card cc-audio-card">
+          <div class="cc-card-top">
+            <span class="cc-label">SOUNDSCAPE</span>
+            <button class="cc-icon-btn" id="cc-sound-toggle" type="button" aria-label="Toggle Sound">♪</button>
+          </div>
+          <div class="cc-slider-wrap">
+            <label for="cc-volume" class="sr-only">Soundscape Volume</label>
+            <input type="range" id="cc-volume" min="0" max="100" value="65" class="cc-slider">
+          </div>
+          <div class="cc-presets" id="cc-track-presets">
+            <button class="cc-preset-pill active" data-track="rain">Rain</button>
+            <button class="cc-preset-pill" data-track="cosmic">Cosmic</button>
+            <button class="cc-preset-pill" data-track="campfire">Campfire</button>
+          </div>
+        </div>
+
+        <!-- AMBIENT THEME CARD -->
+        <div class="cc-card cc-theme-card">
+          <span class="cc-label">ACCENT COLOR</span>
+          <div class="swatches cc-swatches" role="group" aria-label="Accent colors">
+            <button class="swatch lavender" type="button" data-theme="lavender" aria-label="Lavender"></button>
+            <button class="swatch mint" type="button" data-theme="mint" aria-label="Mint"></button>
+            <button class="swatch peach" type="button" data-theme="peach" aria-label="Peach"></button>
+            <button class="swatch blue" type="button" data-theme="blue" aria-label="Blue"></button>
+            <button class="swatch rose" type="button" data-theme="rose" aria-label="Rose Gold"></button>
+          </div>
+        </div>
+
+        <!-- QUICK TOGGLES -->
+        <div class="cc-card cc-toggles-card">
+          <button class="cc-toggle-btn" id="cc-zen-toggle" type="button">
+            <span class="toggle-icon">☁</span>
+            <span>Zen Mode</span>
+          </button>
+          <button class="cc-toggle-btn" id="cc-fullscreen-toggle" type="button">
+            <span class="toggle-icon">⛶</span>
+            <span>Fullscreen</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPOTLIGHT LAUNCHER -->
+    <div class="spotlight-backdrop" id="spotlight-backdrop" hidden>
+      <div class="spotlight-dialog" id="spotlight-modal" role="dialog" aria-modal="true" aria-label="Spotlight Search">
+        <div class="spotlight-input-wrap">
+          <span class="spotlight-icon" aria-hidden="true">⌕</span>
+          <input
+            type="text"
+            id="spotlight-input"
+            class="spotlight-input"
+            placeholder="Search apps, commands, themes... (Esc to exit)"
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <kbd class="spotlight-badge">ESC</kbd>
+        </div>
+        <div class="spotlight-results" id="spotlight-results" role="listbox">
+          <!-- Dynamic Search Results Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- DESKTOP CANVAS WORKSPACE -->
+    <div class="os-desktop" id="os-desktop">
+      <!-- SELECTION MARQUEE -->
+      <div class="selection-marquee" id="selection-marquee" hidden></div>
+
+      <!-- DESKTOP ICONS -->
+      <div class="desktop-icons" id="desktop-icons" role="region" aria-label="Desktop icons">
+        <button class="desktop-icon" data-app="notes" type="button" tabindex="0">
+          <div class="icon-tile notes-tile">
+            <span class="icon-symbol">▤</span>
+          </div>
+          <span class="icon-label">Notes</span>
+        </button>
+
+        <button class="desktop-icon" data-app="appearance" type="button" tabindex="0">
+          <div class="icon-tile appearance-tile">
+            <span class="icon-symbol">◐</span>
+          </div>
+          <span class="icon-label">Appearance</span>
+        </button>
+
+        <button class="desktop-icon" data-app="soundscape" type="button" tabindex="0">
+          <div class="icon-tile sound-tile">
+            <span class="icon-symbol">♪</span>
+          </div>
+          <span class="icon-label">Soundscape</span>
+        </button>
+
+        <button class="desktop-icon" data-app="breathe" type="button" tabindex="0">
+          <div class="icon-tile breathe-tile">
+            <span class="icon-symbol">✳</span>
+          </div>
+          <span class="icon-label">Breathe</span>
+        </button>
+
+        <button class="desktop-icon" data-app="terminal" type="button" tabindex="0">
+          <div class="icon-tile terminal-tile">
+            <span class="icon-symbol">&gt;_</span>
+          </div>
+          <span class="icon-label">Terminal</span>
+        </button>
+
+        <button class="desktop-icon" data-app="system" type="button" tabindex="0">
+          <div class="icon-tile system-tile">
+            <span class="icon-symbol">ℹ</span>
+          </div>
+          <span class="icon-label">System Specs</span>
+        </button>
+
+        <button class="desktop-icon" data-app="trash" type="button" tabindex="0">
+          <div class="icon-tile trash-tile">
+            <span class="icon-symbol">🗑</span>
+          </div>
+          <span class="icon-label">Trash</span>
+        </button>
+      </div>
+
+      <!-- DESKTOP WIDGETS -->
+      <div class="desktop-widgets" id="desktop-widgets" role="region" aria-label="Desktop Widgets">
+        <!-- WIDGET 1: ZEN CLOCK & DATE -->
+        <article class="os-widget widget-clock" id="widget-clock">
+          <div class="widget-top">
+            <span class="label">RIGHT HERE, RIGHT NOW</span>
+            <span class="widget-flower" aria-hidden="true">✳</span>
+          </div>
+          <time class="widget-clock-time" id="widget-clock-time">00:00</time>
+          <div class="widget-clock-bottom">
+            <span id="widget-clock-date">Loading date…</span>
+            <span class="widget-sub-label">NEW DELHI • IST</span>
+          </div>
+        </article>
+
+        <!-- WIDGET 2: LO-FI GENERATIVE SOUNDSCAPE PLAYER -->
+        <article class="os-widget widget-sound" id="widget-sound">
+          <div class="widget-top">
+            <span class="label">LO-FI SOUNDSCAPE</span>
+            <span class="sound-status-dot active" id="widget-sound-indicator" aria-hidden="true"></span>
+          </div>
+          <div class="widget-sound-center">
+            <canvas id="widget-visualizer" class="widget-visualizer" width="160" height="40"></canvas>
+            <div class="widget-track-info">
+              <span class="widget-track-title" id="widget-track-name">Gentle Rain</span>
+              <span class="widget-track-mode">Web Audio Synthesizer</span>
+            </div>
+          </div>
+          <div class="widget-sound-controls">
+            <button class="widget-sound-btn" id="widget-play-btn" type="button" aria-label="Play or Pause Soundscape">
+              <span id="widget-play-icon">▶ Play</span>
+            </button>
+            <div class="widget-track-pills">
+              <button class="track-pill active" data-track="rain">Rain</button>
+              <button class="track-pill" data-track="cosmic">Cosmic</button>
+              <button class="track-pill" data-track="campfire">Campfire</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- WIDGET 3: MINDFUL ZEN NOTE & QUOTE -->
+        <article class="os-widget widget-quote" id="widget-quote">
+          <span class="label">A FRIENDLY REMINDER</span>
+          <p class="quote-text">"You don't have to fill every moment. Room to breathe is a feature."</p>
+          <div class="quote-footer">
+            <span class="pause-doodle" aria-hidden="true">☁</span>
+            <span class="quote-caption">mayaOS zen space</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- FLOATING WINDOW LAYER (MWM) -->
+      <div class="os-windows" id="os-windows">
+        <!-- WINDOW: NOTES -->
+        <section class="os-window" id="win-notes" data-app="notes" style="top: 80px; left: 160px; width: 560px; height: 440px;" hidden>
+          <header class="window-header">
+            <div class="window-controls">
+              <button class="win-btn close" data-action="close" aria-label="Close notes"></button>
+              <button class="win-btn minimize" data-action="minimize" aria-label="Minimize notes"></button>
+              <button class="win-btn maximize" data-action="maximize" aria-label="Maximize notes"></button>
+            </div>
+            <div class="window-title">
+              <span class="win-icon">▤</span> Notes — Maya Notebook
+            </div>
+            <div class="window-actions">
+              <button class="win-toolbar-btn" id="notes-new-btn" title="New Note">＋</button>
+              <button class="win-toolbar-btn" id="notes-clear-btn" title="Clear Note">✕</button>
+            </div>
+          </header>
+          <div class="window-body notes-body">
+            <label for="notes-input" class="sr-only">Your thoughts</label>
+            <textarea id="notes-input" class="notes-textarea" placeholder="Start typing anywhere. This space is entirely yours." spellcheck="true"></textarea>
+            <footer class="notes-footer">
+              <span id="notes-status">Saved locally in this browser.</span>
+              <span class="notes-stats">
+                <span id="notes-word-count">0 words</span> • <span id="notes-char-count">0 characters</span>
+              </span>
+            </footer>
+          </div>
+          <div class="window-resize-handle" aria-hidden="true"></div>
+        </section>
+
+        <!-- WINDOW: APPEARANCE STUDIO -->
+        <section class="os-window" id="win-appearance" data-app="appearance" style="top: 100px; left: 340px; width: 540px; height: 460px;" hidden>
+          <header class="window-header">
+            <div class="window-controls">
+              <button class="win-btn close" data-action="close" aria-label="Close appearance"></button>
+              <button class="win-btn minimize" data-action="minimize" aria-label="Minimize appearance"></button>
+              <button class="win-btn maximize" data-action="maximize" aria-label="Maximize appearance"></button>
+            </div>
+            <div class="window-title">
+              <span class="win-icon">◐</span> Appearance Studio
+            </div>
+            <div class="window-actions"></div>
+          </header>
+          <div class="window-body appearance-body">
+            <div class="appearance-section">
+              <span class="label">ACCENT COLOR PALETTE</span>
+              <h3>Choose your atmosphere</h3>
+              <p class="section-desc">Dark luxury by default. Tailor your space to your vibe.</p>
+              <div class="swatches full-swatches" role="group" aria-label="Themes">
+                <button class="swatch lavender" type="button" data-theme="lavender" aria-label="Lavender">
+                  <span class="swatch-name">Lavender</span>
+                </button>
+                <button class="swatch mint" type="button" data-theme="mint" aria-label="Mint">
+                  <span class="swatch-name">Mint</span>
+                </button>
+                <button class="swatch peach" type="button" data-theme="peach" aria-label="Peach">
+                  <span class="swatch-name">Peach</span>
+                </button>
+                <button class="swatch blue" type="button" data-theme="blue" aria-label="Blue">
+                  <span class="swatch-name">Cosmic Blue</span>
+                </button>
+                <button class="swatch rose" type="button" data-theme="rose" aria-label="Rose Gold">
+                  <span class="swatch-name">Rose Gold</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="appearance-section">
+              <span class="label">WALLPAPER AMBIANCE</span>
+              <div class="wallpaper-options">
+                <button class="wallpaper-card active" data-wallpaper="mesh">
+                  <div class="wp-preview wp-mesh"></div>
+                  <span>Cosmic Aura</span>
+                </button>
+                <button class="wallpaper-card" data-wallpaper="deep">
+                  <div class="wp-preview wp-deep"></div>
+                  <span>Deep Obsidian</span>
+                </button>
+                <button class="wallpaper-card" data-wallpaper="nebula">
+                  <div class="wp-preview wp-nebula"></div>
+                  <span>Soft Nebula</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="appearance-section">
+              <span class="label">GLASS BLUR INTENSITY</span>
+              <div class="cc-slider-wrap">
+                <input type="range" id="slider-blur" min="10" max="40" value="26" class="cc-slider">
+              </div>
+            </div>
+          </div>
+          <div class="window-resize-handle" aria-hidden="true"></div>
+        </section>
+
+        <!-- WINDOW: SOUNDSCAPE STUDIO -->
+        <section class="os-window" id="win-soundscape" data-app="soundscape" style="top: 120px; left: 240px; width: 580px; height: 460px;" hidden>
+          <header class="window-header">
+            <div class="window-controls">
+              <button class="win-btn close" data-action="close" aria-label="Close soundscape"></button>
+              <button class="win-btn minimize" data-action="minimize" aria-label="Minimize soundscape"></button>
+              <button class="win-btn maximize" data-action="maximize" aria-label="Maximize soundscape"></button>
+            </div>
+            <div class="window-title">
+              <span class="win-icon">♪</span> Soundscape Studio — Generative Audio
+            </div>
+            <div class="window-actions"></div>
+          </header>
+          <div class="window-body soundscape-body">
+            <div class="soundscape-hero">
+              <canvas id="app-visualizer" class="app-visualizer" width="480" height="90"></canvas>
+              <div class="soundscape-meta">
+                <div>
+                  <h3 id="app-sound-name">Gentle Rain & Calm</h3>
+                  <span class="label">SYNTHESIZED IN REAL-TIME VIA WEB AUDIO API</span>
+                </div>
+                <button class="button primary" id="app-sound-toggle-btn" type="button">
+                  ▶ Start Audio
+                </button>
+              </div>
+            </div>
+
+            <div class="sound-presets-grid">
+              <button class="sound-preset-card active" data-track="rain">
+                <span class="preset-icon">🌧️</span>
+                <h4>Rain & Thunder</h4>
+                <p>Gentle lowpass pink noise with organic amplitude swells.</p>
+              </button>
+              <button class="sound-preset-card" data-track="cosmic">
+                <span class="preset-icon">🌌</span>
+                <h4>Cosmic Hum</h4>
+                <p>Binaural detuned drone for deep focus and meditation.</p>
+              </button>
+              <button class="sound-preset-card" data-track="campfire">
+                <span class="preset-icon">🪵</span>
+                <h4>Zen Campfire</h4>
+                <p>Soothing crackles and warm fireside resonance.</p>
+              </button>
+            </div>
+
+            <div class="soundscape-controls-bar">
+              <span class="label">MASTER GAIN</span>
+              <input type="range" id="app-volume-slider" min="0" max="100" value="65" class="cc-slider">
+            </div>
+          </div>
+          <div class="window-resize-handle" aria-hidden="true"></div>
+        </section>
+
+        <!-- WINDOW: MINDFUL BREATHE -->
+        <section class="os-window" id="win-breathe" data-app="breathe" style="top: 90px; left: 380px; width: 480px; height: 490px;" hidden>
+          <header class="window-header">
+            <div class="window-controls">
+              <button class="win-btn close" data-action="close" aria-label="Close breathe"></button>
+              <button class="win-btn minimize" data-action="minimize" aria-label="Minimize breathe"></button>
+              <button class="win-btn maximize" data-action="maximize" aria-label="Maximize breathe"></button>
+            </div>
+            <div class="window-title">
+              <span class="win-icon">✳</span> Mindful Breathe — 4-7-8 Pacer
+            </div>
+            <div class="window-actions"></div>
+          </header>
+          <div class="window-body breathe-body">
+            <div class="breathe-stage">
+              <div class="breathe-circle-wrap">
+                <div class="breathe-circle-outer"></div>
+                <div class="breathe-circle-inner" id="breathe-circle"></div>
+                <div class="breathe-center-text">
+                  <span class="breathe-phase" id="breathe-phase">Ready</span>
+                  <span class="breathe-timer" id="breathe-timer">0s</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="breathe-instruction" id="breathe-instruction">
+              Press Start to begin the 4-7-8 breath cycle for tranquility.
+            </p>
+
+            <div class="breathe-footer">
+              <button class="button primary" id="breathe-toggle-btn" type="button">Start Session</button>
+              <span class="breathe-cycle-count" id="breathe-cycles">Cycle 0 of 4</span>
+            </div>
+          </div>
+          <div class="window-resize-handle" aria-hidden="true"></div>
+        </section>
+
+        <!-- WINDOW: TERMINAL -->
+        <section class="os-window window-terminal" id="win-terminal" data-app="terminal" style="top: 140px; left: 200px; width: 590px; height: 420px;" hidden>
+          <header class="window-header">
+            <div class="window-controls">
+              <button class="win-btn close" data-action="close" aria-label="Close terminal"></button>
+              <button class="win-btn minimize" data-action="minimize" aria-label="Minimize terminal"></button>
+              <button class="win-btn maximize" data-action="maximize" aria-label="Maximize terminal"></button>
+            </div>
+            <div class="window-title">
+              <span class="win-icon">&gt;_</span> maya-cli — zsh 80x24
+            </div>
+            <div class="window-actions"></div>
+          </header>
+          <div class="window-body terminal-body" id="terminal-body">
+            <div class="terminal-output" id="terminal-output">
+              <div class="terminal-line banner">
+                <span>MayaOS Web Edition v0.4 (Awwwards Release)</span>
+                <span>Type <strong class="term-hl">help</strong> to view available commands.</span>
+              </div>
+            </div>
+            <div class="terminal-input-row">
+              <span class="terminal-prompt">maya@desktop ~ %</span>
+              <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" autofocus>
+            </div>
+          </div>
+          <div class="window-resize-handle" aria-hidden="true"></div>
+        </section>
+
+        <!-- WINDOW: SYSTEM INFO -->
+        <section class="os-window" id="win-system" data-app="system" style="top: 110px; left: 300px; width: 490px; height: 430px;" hidden>
+          <header class="window-header">
+            <div class="window-controls">
+              <button class="win-btn close" data-action="close" aria-label="Close system specs"></button>
+              <button class="win-btn minimize" data-action="minimize" aria-label="Minimize system specs"></button>
+              <button class="win-btn maximize" data-action="maximize" aria-label="Maximize system specs"></button>
+            </div>
+            <div class="window-title">
+              <span class="win-icon">ℹ</span> System Telemetry
+            </div>
+            <div class="window-actions"></div>
+          </header>
+          <div class="window-body system-body">
+            <div class="system-top-card">
+              <div class="system-logo-art" aria-hidden="true">✳</div>
+              <div>
+                <h2>MayaOS Web Edition</h2>
+                <p>Version 0.4 (Personal Desktop Experiment)</p>
+                <span class="system-chip">Designed by Pratyush Rai</span>
+              </div>
+            </div>
+
+            <div class="system-specs-list">
+              <div class="spec-row">
+                <span class="spec-name">Operating Environment</span>
+                <span class="spec-value" id="sys-platform">Browser Web Runtime</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-name">Display Resolution</span>
+                <span class="spec-value" id="sys-resolution">1920 × 1080</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-name">Color Palette</span>
+                <span class="spec-value" id="sys-theme">Lavender Glow</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-name">Audio Subsystem</span>
+                <span class="spec-value">Web Audio API (Synthesizer Ready)</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-name">Session Uptime</span>
+                <span class="spec-value" id="sys-uptime">00:00:00</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-name">System Power</span>
+                <span class="spec-value" id="sys-battery">100% (AC Adapter)</span>
+              </div>
+            </div>
+          </div>
+          <div class="window-resize-handle" aria-hidden="true"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- DESKTOP CONTEXT MENU -->
+    <div class="os-context-menu" id="desktop-context-menu" hidden role="menu">
+      <button class="context-item" data-context-action="new-note" role="menuitem">
+        <span>▤</span> Make a Little Note
+      </button>
+      <button class="context-item" data-context-action="appearance" role="menuitem">
+        <span>◐</span> Customize Appearance
+      </button>
+      <button class="context-item" data-context-action="soundscape" role="menuitem">
+        <span>♪</span> Soundscape Studio
+      </button>
+      <button class="context-item" data-context-action="breathe" role="menuitem">
+        <span>✳</span> Guided Breathe
+      </button>
+      <div class="context-divider"></div>
+      <button class="context-item" data-context-action="terminal" role="menuitem">
+        <span>&gt;_</span> Open Terminal
+      </button>
+      <button class="context-item" data-context-action="system" role="menuitem">
+        <span>ℹ</span> System Specs
+      </button>
+      <div class="context-divider"></div>
+      <button class="context-item" data-context-action="reboot" role="menuitem">
+        <span>⟳</span> Restart Startup Screen
+      </button>
+    </div>
+
+    <!-- macOS-STYLE MAGNIFYING DOCK -->
+    <nav class="os-dock" id="os-dock" aria-label="Desktop application dock">
+      <button class="dock-item" data-app="home" type="button" aria-label="Show Desktop">
+        <div class="dock-icon-wrapper">
+          <span class="dock-icon home-icon">✳</span>
+        </div>
+        <span class="dock-label">Desktop</span>
+        <span class="dock-dot"></span>
+      </button>
 
       <span class="dock-divider" aria-hidden="true"></span>
 
-      <button class="dock-item" type="button" data-open="notes-dialog">
-        <span aria-hidden="true">▤</span>
+      <button class="dock-item" data-app="notes" type="button" aria-label="Notes">
+        <div class="dock-icon-wrapper">
+          <span class="dock-icon notes-icon">▤</span>
+        </div>
         <span class="dock-label">Notes</span>
+        <span class="dock-dot"></span>
       </button>
 
-      <button class="dock-item" type="button" data-open="appearance-dialog">
-        <span aria-hidden="true">◐</span>
-        <span class="dock-label">Style</span>
+      <button class="dock-item" data-app="appearance" type="button" aria-label="Appearance">
+        <div class="dock-icon-wrapper">
+          <span class="dock-icon appearance-icon">◐</span>
+        </div>
+        <span class="dock-label">Appearance</span>
+        <span class="dock-dot"></span>
       </button>
 
-      <button id="fullscreen-button" class="dock-item" type="button">
-        <span aria-hidden="true">⛶</span>
-        <span id="fullscreen-label" class="dock-label">Expand</span>
+      <button class="dock-item" data-app="soundscape" type="button" aria-label="Soundscape">
+        <div class="dock-icon-wrapper">
+          <span class="dock-icon sound-icon">♪</span>
+        </div>
+        <span class="dock-label">Soundscape</span>
+        <span class="dock-dot"></span>
+      </button>
+
+      <button class="dock-item" data-app="breathe" type="button" aria-label="Breathe">
+        <div class="dock-icon-wrapper">
+          <span class="dock-icon breathe-icon">✳</span>
+        </div>
+        <span class="dock-label">Breathe</span>
+        <span class="dock-dot"></span>
+      </button>
+
+      <button class="dock-item" data-app="terminal" type="button" aria-label="Terminal">
+        <div class="dock-icon-wrapper">
+          <span class="dock-icon terminal-icon">&gt;_</span>
+        </div>
+        <span class="dock-label">Terminal</span>
+        <span class="dock-dot"></span>
+      </button>
+
+      <button class="dock-item" data-app="system" type="button" aria-label="System Info">
+        <div class="dock-icon-wrapper">
+          <span class="dock-icon system-icon">ℹ</span>
+        </div>
+        <span class="dock-label">Specs</span>
+        <span class="dock-dot"></span>
+      </button>
+
+      <span class="dock-divider" aria-hidden="true"></span>
+
+      <button class="dock-item" data-app="trash" type="button" aria-label="Trash">
+        <div class="dock-icon-wrapper">
+          <span class="dock-icon trash-icon">🗑</span>
+        </div>
+        <span class="dock-label">Trash</span>
+        <span class="dock-dot"></span>
+      </button>
+
+      <button class="dock-item" id="dock-fullscreen" type="button" aria-label="Toggle Fullscreen">
+        <div class="dock-icon-wrapper">
+          <span class="dock-icon">⛶</span>
+        </div>
+        <span class="dock-label">Expand</span>
+        <span class="dock-dot"></span>
       </button>
     </nav>
 
-    <p id="toast" class="toast" role="status"></p>
+    <!-- TOAST NOTIFICATIONS -->
+    <div id="toast" class="os-toast" role="status" aria-live="polite"></div>
   </main>
-
-  <!-- NOTES APP -->
-  <dialog id="notes-dialog" class="app-dialog" data-lenis-prevent>
-    <div class="dialog-header">
-      <div>
-        <span class="label">MAYA NOTEBOOK</span>
-        <h2>A thought or two.</h2>
-      </div>
-
-      <button
-        class="close-button"
-        type="button"
-        data-close
-        aria-label="Close notebook"
-      >×</button>
-    </div>
-
-    <label for="notes-input" class="sr-only">Your notes</label>
-    <textarea
-      id="notes-input"
-      placeholder="Start anywhere. This space is yours."
-      spellcheck="true"
-    ></textarea>
-
-    <p id="save-status" class="dialog-footer" role="status">
-      Saved only in this browser.
-    </p>
-  </dialog>
-
-  <!-- APPEARANCE APP -->
-  <dialog id="appearance-dialog" class="app-dialog appearance-dialog" data-lenis-prevent>
-    <div class="dialog-header">
-      <div>
-        <span class="label">PERSONALIZE YOUR SPACE</span>
-        <h2>Find your color.</h2>
-      </div>
-
-      <button
-        class="close-button"
-        type="button"
-        data-close
-        aria-label="Close appearance"
-      >×</button>
-    </div>
-
-    <p class="appearance-description">
-      Dark by default. A little personality on top.
-    </p>
-
-    <div class="swatches" role="group" aria-label="Accent color">
-      <button
-        class="swatch lavender"
-        type="button"
-        data-theme="lavender"
-        aria-label="Lavender"
-        aria-pressed="true"
-      ></button>
-      <button
-        class="swatch mint"
-        type="button"
-        data-theme="mint"
-        aria-label="Mint"
-        aria-pressed="false"
-      ></button>
-      <button
-        class="swatch peach"
-        type="button"
-        data-theme="peach"
-        aria-label="Peach"
-        aria-pressed="false"
-      ></button>
-      <button
-        class="swatch blue"
-        type="button"
-        data-theme="blue"
-        aria-label="Blue"
-        aria-pressed="false"
-      ></button>
-    </div>
-
-    <p class="dialog-footer">Inspired by Material. Made for MAYA.</p>
-  </dialog>
 </body>
 </html>

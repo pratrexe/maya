@@ -2,7 +2,7 @@
 
 A personal web desktop that feels like your own little world.
 
-MAYA is a front-end experiment inspired by **Material You** and hand-drawn interfaces. It opens with an ASCII startup screen, a flowing signature for **Pratyush Rai**, and a smooth transition into a desktop workspace with a live clock, a scratchpad notes app, and customizable accent colors.
+MAYA is a front-end experiment inspired by **Material You** and hand-drawn interfaces. It opens with an orbital cosmic startup screen, a flowing signature for **Pratyush Rai**, and a smooth transition into a desktop workspace with a live clock, a scratchpad notes app, and customizable accent colors.
 
 > **Note:** MAYA is a **website**, not a real operating system. Everything runs in your browser. Notes are saved locally in that browser and never leave your device.
 
@@ -10,7 +10,7 @@ MAYA is a front-end experiment inspired by **Material You** and hand-drawn inter
 
 ## Features
 
-* **Startup sequence** — ASCII logo, animated loading bar, and a handwritten-style signature.
+* **Startup sequence** — Orbital flower animation, dynamic status cues, glowing progress bar, and handwritten-style signature.
 * **Material-inspired design** — Dark palette by default, tonal surfaces, oversized typography, and soft pill controls.
 * **Live clock & date** — Updates every second.
 * **Notes app** — A simple text area stored in `localStorage`. Edits save automatically and appear on the home card.
@@ -54,7 +54,7 @@ The page will automatically reload whenever you edit the files.
 ```text
 maya/
 ├── index.html      # Markup and structure
-├── styles.css      # Styling, themes, and responsive rules
+├── style.css       # Styling, themes, and responsive rules
 ├── app.js          # Startup logic, interactions, localStorage, smooth scrolling
 └── README.md       # Project documentation
 ```
