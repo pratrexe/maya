@@ -6,10 +6,10 @@ MAYA is a front-end experiment inspired by **Material You** and hand-drawn inter
 
 > **Note:** MAYA is a **website**, not a real operating system. Everything runs in your browser. Notes are saved locally in that browser and never leave your device.
 
----
-
-## Features
-
+--- 
+  
+## Features 
+ 
 * **Startup sequence** — Orbital flower animation, dynamic status cues, glowing progress bar, and handwritten-style signature.
 * **Material-inspired design** — Dark palette by default, tonal surfaces, oversized typography, and soft pill controls.
 * **Live clock & date** — Updates every second.
@@ -163,7 +163,7 @@ This project is free for personal use and learning.
 
 If you share or build upon MAYA, please mention the original author:
 
-**Pratyush Rai**
+**made with love by Pratyush Rai**
 
 ---
 
